@@ -687,7 +687,7 @@ function setupPublications(panel){
  panel.addEventListener('click',event=>{const button=event.target.closest('[data-gallery-step]');if(button&&!button.disabled)panel.turnPage(Number(button.dataset.galleryStep));});
  const disposeImages=panel.dispose;panel.dispose=()=>{clearMotion();disposeImages?.();};
 }
-const lifeScrollPositions={news:0,gallery:0},lifeEntered=new Set();
+
 function news(){return `<div class="life-intro"><h2>Lab Highlights</h2></div><div id="news-official-view" class="news-view" data-news-view="official"><section class="news-year"><h3>2026</h3><div class="timeline"><article class="news-entry" data-noze-entry-id="news-001"><time>2026</time><p>Congratulations to Prof. Kang on receiving the <strong>Young Investigator Award</strong> from the American Society for Nutrition!</p></article><article class="news-entry" data-noze-entry-id="news-002"><time>2026</time><p>Congratulations to Prof. Kang on receiving the <strong>Outstanding Editor Award</strong> for the Journal of Microbiology and Biotechnology!</p></article><article class="news-entry" data-noze-entry-id="news-003"><time>APR. 2026</time><p>Prof. Kang gave a talk titled <strong>“Nutritional modulation of metabolic enzymes and epigenetic approaches for cardiometabolic health”</strong>.</p><p class="news-venue">2026 Spring Congress on Lipid and Atherosclerosis</p></article><article class="news-entry" data-noze-entry-id="news-004"><time>JAN. 2026</time><p>Prof. Kang gave a talk titled <strong>“Nutritional Modulation of Histone Modifications in Macrophages for Alcohol-Associated Liver Disease”</strong>.</p><p class="news-venue">13th NAPA Annual Meeting</p></article></div></section><section class="news-year"><h3>2025</h3><div class="timeline"><article class="news-entry" data-noze-entry-id="news-005"><time>2025</time><p>Congratulations to Prof. Kang on receiving the <strong>Young Investigator Award</strong> from the Korean Nutrition Society!</p></article><article class="news-entry news-feature" data-noze-entry-id="news-006"><time>OCT. 2025</time><p>A presentation titled <strong>“Fucoxanthin attenuates neuroinflammation by modulating the mitochondrial unfolded protein response via sirtuin 3 activation in microglia”</strong> received an award.</p><p class="news-venue">Korean Nutrition Society Annual Fall Meeting</p><div class="award-media"><figure><img class="news-scene" src="./media/182171a2f421e60ae46b947f33fc2468ea695810353a8a4483c3a977d3781b43.webp" alt="Awarded poster, OCT. 2025"></figure><figure><img class="news-scene" src="./media/c4e110119c2065bff4bb0b8ef9e3626cc8aaff3a9b145a4d0fb2749c69623301.webp" alt="Award certificate, OCT. 2025"></figure></div></article><article class="news-entry news-feature" data-noze-entry-id="news-007"><time>JUL. 2025</time><p>A presentation titled <strong>“Fisetin attenuates lipopolysaccharide-induced neuroinflammation by modulating the histone deacetylase 3–nuclear factor erythroid 2–related factor 2 axis”</strong> received an award.</p><p class="news-venue">Korean Society of Food Science and Technology International Symposium and Annual Meeting</p><div class="award-media"><figure><img class="news-scene" src="./media/0bb892b3cb08780145b65b0bf7f54c1ee9e83aeb24403f314f672ef98111aa3a.webp" alt="Awarded poster, JUL. 2025"></figure><figure><img class="news-scene" src="./media/fdd2f61284dab00e5df4b27da676e04ae8c059ba9519b0d44b28d0a33bd8b6af.webp" alt="Award certificate, JUL. 2025"></figure></div></article><article class="news-entry news-feature" data-noze-entry-id="news-008"><time>APR. 2025</time><p>A presentation titled <strong>“Nicotinamide riboside, a vitamin B3 derivative, alleviates alcohol-induced macrophage dysfunction in atherosclerosis through histone deacetylase modulation”</strong> received an award.</p><p class="news-venue">2025 Spring Congress on Lipid and Atherosclerosis</p><div class="award-media"><figure><img class="news-scene" src="./media/b13b0950c36c24a51d44cca4d06248c333baf182a7a91fe8801ad0b8934de6cb.webp" alt="Awarded poster, APR. 2025"></figure><figure><img class="news-scene" src="./media/84bc3de898c78d206c2a5182a2ebc757b0ba4b52d210d6c3ba8821e9f37e443f.webp" alt="Award certificate, APR. 2025"></figure></div></article></div></section><section class="news-year"><h3>2024</h3><div class="timeline"><article class="news-entry" data-noze-entry-id="news-009"><time>NOV. 2024</time><p>Prof. Kang gave a talk titled <strong>“Emerging role of nutrient-altered histone modification in inflammation and atherosclerosis”</strong>.</p><p class="news-venue">The 11th Korean Society of CardioMetabolic Syndrome</p></article><article class="news-entry" data-noze-entry-id="news-010"><time>OCT. 2024</time><p>A presentation titled <strong>“Protective effects of nicotinamide riboside on lipopolysaccharide-induced inflammation and mitochondrial dysfunction via AMP-activated protein kinase-sirtuin 3 pathways in microglia”</strong> received an award.</p><p class="news-venue">Korean Nutrition Society Annual Fall Meeting</p></article><article class="news-entry news-feature" data-noze-entry-id="news-011"><time>JUL. 2024</time><p>A presentation titled <strong>“Nicotinamide riboside abrogates lipopolysaccharide-induced inflammation and mitochondrial dysfunction via SIRT3-AMPK pathway in microglia”</strong> received an award.</p><p class="news-venue">Korean Society of Food Science and Technology International Symposium and Annual Meeting</p><div class="award-media"><figure><img class="news-scene" src="./media/3d21c13368e2ca61acb4e9d291d20e8d0c5d81da84d1a72337403319831e763a.webp" alt="Awarded poster, JUL. 2024"></figure><figure><img class="news-scene" src="./media/4bcec943f67ca883279ce5391bb5c3d69292d17224198321cbe325a2b4b07267.webp" alt="Award certificate, JUL. 2024"></figure></div></article></div></section><section class="news-year"><h3>2023</h3><div class="timeline"><article class="news-entry" data-noze-entry-id="news-012"><time>OCT. 2023</time><p>A presentation titled <strong>“Protective effects of ginsenoside compound K in ethanol-induced macrophage inflammation via sirtuin 1 regulation”</strong> received an award.</p><p class="news-venue">Korean Nutrition Society Annual Fall Meeting</p></article><article class="news-entry" data-noze-entry-id="news-013"><time>FEB. 2023</time><p>Prof. Kang gave a talk titled <strong>“Role of nicotinamide riboside targeting histone modifications in alcohol-induced inflammation and metabolic reprogramming of macrophages”</strong>.</p><p class="news-venue">Korean Society of Food Science and Technology, Health Functional Foods Division</p></article></div></section><section class="news-year"><h3>2022</h3><div class="timeline"><article class="news-entry" data-noze-entry-id="news-014"><time>SEP. 2022</time><p>Prof. Kang gave a talk titled <strong>“Emerging role of epigenetic regulation by nutrients in inflammation and atherosclerosis”</strong>.</p><p class="news-venue">The 11th International Congress on Lipid & Atherosclerosis</p></article><article class="news-entry" data-noze-entry-id="news-015"><time>JUL. 2022</time><p>Prof. Kang gave a talk titled <strong>“Astaxanthin regulates histone deacetylases for the prevention of alcohol-induced inflammation and oxidative stress in macrophages”</strong>.</p><p class="news-venue">Korean Society of Food Science and Technology International Symposium and Annual Meeting</p></article></div></section></div>`;}
 function gallery(){return `<div class="life-intro"><h2>What’s happening at FoGe lab.</h2><span class="handwritten">연구실의 소식을 전합니다.</span></div><div id="news-gallery-view" class="news-view" data-news-view="gallery"><p style="margin:32px 0;font-size:clamp(18px,2vw,26px);color:var(--muted)">Coming soon</p></div>`;}
 function setupLifePhotoSets(panel){
@@ -718,7 +718,7 @@ function setupNews(panel){
  const scroller=panel.querySelector('.panel-scroll'),lifeKey=panel.dataset.panel;
  const contentSelector='.news-entry,.gallery-album',nodeSelector=contentSelector+',.news-year>h3',states=new Map(),svgNS='http://www.w3.org/2000/svg';
  const motion={ambientScale:1.5,dragResponse:.78,yearResponse:.70,stemResponse:.18,yearStemResponse:.12,branchBend:.72,supportTransfer:.10,settleRate:.23,waveAmplitude:7,wavePitch:250,wavePeriod:18000};
- let held=null,frame=0,previous=0,suppressClickUntil=0,disposed=false,idleAt=performance.now(),wavePhase=0,entrance=[],entranceReady=false;
+ let held=null,frame=0,previous=0,suppressClickUntil=0,disposed=false,idleAt=performance.now(),wavePhase=0;
  const stateFor=node=>{if(!states.has(node))states.set(node,{x:0,y:0,vx:0,vy:0,rx:0,ry:0,wx:0});return states.get(node);};
  const paint=(node,s,x,y)=>{s.rx=x;s.ry=y;node.style.translate=x+'px '+y+'px';};
  const create=(tag,attrs)=>{const el=document.createElementNS(svgNS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);return el;};
@@ -726,17 +726,41 @@ function setupNews(panel){
  for(const view of panel.querySelectorAll('[data-news-view]')){const svg=create('svg',{'class':'life-stem','aria-hidden':'true',focusable:'false'}),spine=create('path',{'class':'life-spine',pathLength:'1'});svg.append(spine);view.prepend(svg);drawings.set(view,{svg,spine,marks:[]});}
  function wake(){if(!disposed&&!frame){previous=0;frame=requestAnimationFrame(tick);}}
  function resetMotion(){for(const [node,s] of states){s.x=s.y=s.vx=s.vy=0;paint(node,s,0,0);}idleAt=performance.now();}
- function cancelEntrance(){for(const animation of entrance)animation.cancel();entrance=[];}
+ // Reserve each entry's space; reveal only entries reached by the viewport.
+ const revealed=new Set(),revealRows=new Set();let revealTimer=0,revealFrame=0,revealActive=false,nextRevealAt=0;
+ function finishRow(node){
+  const animation=node._lifeReveal;if(animation){animation.cancel();delete node._lifeReveal;}
+  node.style.removeProperty('opacity');node.style.removeProperty('visibility');revealed.add(node);
+ }
+ function collectRows(){for(const node of panel.querySelectorAll(contentSelector)){if(revealRows.has(node))continue;revealRows.add(node);if(revealActive&&!reduce.matches&&!window.nozeEditorActive){node.style.opacity='0';node.style.visibility='hidden';}else if(revealActive)finishRow(node);}}
+ function cancelEntrance(){clearTimeout(revealTimer);cancelAnimationFrame(revealFrame);revealTimer=revealFrame=0;revealActive=false;for(const node of revealRows)finishRow(node);}
+ function revealViewport(){
+  revealFrame=0;clearTimeout(revealTimer);revealTimer=0;if(!revealActive||disposed)return;collectRows();
+  if(reduce.matches||window.nozeEditorActive){for(const node of revealRows)finishRow(node);return;}
+  const viewport=scroller.getBoundingClientRect(),visible=[];
+  for(const node of revealRows){if(!node.isConnected){revealRows.delete(node);revealed.delete(node);continue;}const r=node.getBoundingClientRect();
+   // Only fully skipped entries finish immediately; scrolling cannot finish a visible reveal.
+   if(r.bottom<=viewport.top){finishRow(node);continue;}
+   if(!revealed.has(node)&&r.top<viewport.bottom&&r.bottom>viewport.top)visible.push(node);
+  }
+  if(!visible.length)return;
+  visible.sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top);
+  const now=performance.now();if(now<nextRevealAt){revealTimer=setTimeout(queueReveal,nextRevealAt-now);return;}
+  const node=visible[0];revealed.add(node);node.style.removeProperty('visibility');node.style.removeProperty('opacity');
+  const animation=node.animate([{opacity:0,clipPath:'inset(0 0 100% 0)',transform:'translateY(-10px)'},{opacity:1,clipPath:'inset(0)',transform:'translateY(0)'}],{duration:620,easing:'cubic-bezier(.22,.61,.36,1)',fill:'backwards'});
+  node._lifeReveal=animation;animation.finished.then(()=>{if(node._lifeReveal===animation)delete node._lifeReveal;},()=>{});
+  const gap=lifeKey==='news'?820:260;nextRevealAt=now+gap;if(visible.length>1)revealTimer=setTimeout(queueReveal,gap);
+ }
+ function queueReveal(){if(!disposed&&revealActive&&!revealFrame)revealFrame=requestAnimationFrame(revealViewport);}
  panel.cancelEntrance=cancelEntrance;
  panel.startEntrance=(prepare=false)=>{
-  if(entranceReady&&!prepare){entranceReady=false;for(const animation of entrance)animation.play();return;}
-  if(lifeKey!=='news'||lifeEntered.has(lifeKey)||disposed||!panel.isConnected)return;
-  lifeEntered.add(lifeKey);if(reduce.matches||window.nozeEditorActive||scroller.scrollTop>10)return;
-  const viewport=scroller.getBoundingClientRect(),rows=[...panel.querySelectorAll('.news-entry')].filter(node=>{const r=node.getBoundingClientRect();return r.bottom>viewport.top&&r.top<viewport.bottom;}).slice(0,6);
-  rows.forEach((node,i)=>entrance.push(node.animate([{opacity:0,clipPath:'inset(0 0 100% 0)',transform:'translateY(-12px)'},{opacity:1,clipPath:'inset(0 0 0 0)',transform:'translateY(0)'}],{duration:760,delay:120+i*280,easing:'cubic-bezier(.22,.61,.36,1)',fill:'backwards'})));
-  if(prepare){entranceReady=true;for(const animation of entrance)animation.pause();}
+  if(disposed||!panel.isConnected)return;
+  if(!revealActive){revealActive=true;collectRows();}
+  if(!prepare)queueReveal();
  };
- scroller.addEventListener('scroll',()=>{if(!navigation&&scroller.scrollTop>0)cancelEntrance();if(panel===live&&!navigation)lifeScrollPositions[lifeKey]=scroller.scrollTop;},{passive:true});
+ scroller.addEventListener('scroll',queueReveal,{passive:true});
+ const revealObserver=new MutationObserver(queueReveal);revealObserver.observe(panel,{childList:true,subtree:true});
+ revealActive=true;collectRows();
  function tick(now){frame=0;if(disposed||!panel.isConnected)return;const view=panel.querySelector('[data-news-view]:not([hidden])');if(!view){previous=0;return;}
   const elapsed=Math.min(100,Math.max(0,now-(previous||now))),steps=Math.min(3,Math.max(.25,(now-(previous||now-16.67))/16.67));previous=now;let moving=false;
   for(const [node,s] of states){if(!node.isConnected){states.delete(node);continue;}if(held?.node===node){moving||=held.dragging;continue;}
@@ -767,7 +791,7 @@ function setupNews(panel){
  function release(event){if(!held||(event&&event.pointerId!==held.id))return;const drag=held;held=null;drag.node.classList.remove('is-life-dragging');panel.classList.remove('is-life-dragging');if(drag.dragging)suppressClickUntil=performance.now()+400;idleAt=performance.now();if(drag.node.hasPointerCapture(drag.id))drag.node.releasePointerCapture(drag.id);wake();}
  panel.addEventListener('pointerdown',event=>{if(event.button!==0||!event.isPrimary||window.nozeEditorActive||held)return;const node=event.target.closest(nodeSelector);if(!node||node.closest('[hidden]'))return;if(event.target.closest('a,input,textarea,select,[contenteditable],button,summary'))return;
   // Begin at the current subtle idle offset, then use only direct pointer displacement.
-  cancelEntrance();const s=stateFor(node);s.x=s.rx-s.wx;s.y=s.ry;s.vx=s.vy=0;held={node,id:event.pointerId,startX:event.clientX,startY:event.clientY,homeX:s.x,homeY:s.y,dragging:false};wake();
+  revealViewport();const s=stateFor(node);s.x=s.rx-s.wx;s.y=s.ry;s.vx=s.vy=0;held={node,id:event.pointerId,startX:event.clientX,startY:event.clientY,homeX:s.x,homeY:s.y,dragging:false};wake();
  });
  panel.addEventListener('pointermove',event=>{if(!held||event.pointerId!==held.id)return;if(window.nozeEditorActive){release(event);return;}const dx=event.clientX-held.startX,dy=event.clientY-held.startY;if(!held.dragging&&Math.hypot(dx,dy)<6)return;
   if(!held.dragging){held.dragging=true;held.node.setPointerCapture(held.id);held.node.classList.add('is-life-dragging');panel.classList.add('is-life-dragging');getSelection()?.removeAllRanges();}
@@ -776,11 +800,11 @@ function setupNews(panel){
  window.addEventListener('pointerup',release);window.addEventListener('pointercancel',release);panel.addEventListener('lostpointercapture',release);
  panel.addEventListener('dragstart',event=>{if(event.target.closest(nodeSelector)&&!window.nozeEditorActive)event.preventDefault();});
  panel.addEventListener('click',event=>{if(!window.nozeEditorActive&&performance.now()<suppressClickUntil&&event.target.closest(nodeSelector)){event.preventDefault();event.stopImmediatePropagation();}},true);
- const finishInteraction=()=>{cancelEntrance();};panel.addEventListener('wheel',finishInteraction,{passive:true});panel.addEventListener('touchmove',finishInteraction,{passive:true});
- const cancelDrag=()=>release(),resize=()=>{cancelEntrance();wake();},mode=event=>{if(event.source===parent&&event.data?.type==='noze-edit-mode'){cancelEntrance();release();resetMotion();wake();}};window.addEventListener('blur',cancelDrag);window.addEventListener('resize',resize);window.addEventListener('message',mode);reduce.addEventListener('change',resize);
+ const finishInteraction=queueReveal;panel.addEventListener('wheel',finishInteraction,{passive:true});panel.addEventListener('touchmove',finishInteraction,{passive:true});
+ const cancelDrag=()=>release(),resize=()=>{queueReveal();wake();},mode=event=>{if(event.source===parent&&event.data?.type==='noze-edit-mode'){cancelEntrance();release();resetMotion();wake();}};window.addEventListener('blur',cancelDrag);window.addEventListener('resize',resize);window.addEventListener('message',mode);reduce.addEventListener('change',resize);
  const observer=new ResizeObserver(()=>wake());for(const view of drawings.keys())observer.observe(view);
- const originalDispose=panel.dispose;panel.dispose=()=>{cancelEntrance();disposed=true;release();cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener('pointerup',release);window.removeEventListener('pointercancel',release);window.removeEventListener('blur',cancelDrag);window.removeEventListener('resize',resize);window.removeEventListener('message',mode);reduce.removeEventListener('change',resize);states.clear();originalDispose?.();};
- requestAnimationFrame(()=>{if(!panel.isConnected)return;if(!scroller.scrollTop)scroller.scrollTop=lifeScrollPositions[lifeKey]||0;panel.hydrate?.();queueDial();wake();});
+ const originalDispose=panel.dispose;panel.dispose=()=>{cancelEntrance();disposed=true;release();cancelAnimationFrame(frame);observer.disconnect();revealObserver.disconnect();window.removeEventListener('pointerup',release);window.removeEventListener('pointercancel',release);window.removeEventListener('blur',cancelDrag);window.removeEventListener('resize',resize);window.removeEventListener('message',mode);reduce.removeEventListener('change',resize);states.clear();originalDispose?.();};
+ requestAnimationFrame(()=>{if(!panel.isConnected)return;scroller.scrollTop=0;panel.hydrate?.();queueDial();wake();});
 }
 
 function contact(){const node=document.querySelector('#contact-dialog').cloneNode(true);node.querySelector('.dialog-close').remove();node.querySelector('#contact-title').remove();node.querySelector('.eyebrow').remove();return `<div class="contact-page">${node.innerHTML}</div>`;}
@@ -838,7 +862,7 @@ function navigate(key,{animate=true,historyMode='push',enterFromEnd=false}={}){
  if(!order.includes(key))return;
  if(navigation){pending={key,options:{animate,historyMode,enterFromEnd}};return;}
  if(key===current){live.querySelector('.panel-scroll')?.scrollTo({top:0,behavior:reduce.matches?'instant':'smooth'});stage.focus({preventScroll:true});return;}
- if(live?.matches('[data-panel=news],[data-panel=gallery]'))lifeScrollPositions[current]=live.querySelector('.panel-scroll').scrollTop;
+ if(key==='news'||key==='gallery')enterFromEnd=false;
  live.cancelEntrance?.();
  const old=live,direction=order.indexOf(key)>order.indexOf(current)?1:-1;
  current=key;live=mount(key);stage.append(live);live.startEntrance?.(true);live.fit?.({fromEnd:enterFromEnd});
@@ -864,7 +888,7 @@ function crossBoundary(direction,amount){
  if(boundaryDirection!==direction||now-boundaryTime>300)boundaryIntent=0;
  boundaryDirection=direction;boundaryTime=now;boundaryIntent+=Math.abs(amount);
  if(boundaryIntent<36)return;
- const next=neighbor(direction);resetBoundary();if(next){const topEntry=direction<0&&(next==='news'||next==='gallery');if(topEntry)lifeScrollPositions[next]=0;navigate(next,{enterFromEnd:direction<0&&!topEntry});}
+ const next=neighbor(direction);resetBoundary();if(next){const topEntry=direction<0&&(next==='news'||next==='gallery');navigate(next,{enterFromEnd:direction<0&&!topEntry});}
 }
 let wheelLast=0,wheelSpent=false;
 function wheelGesture(event){const now=performance.now();if(now-wheelLast>240)wheelSpent=false;wheelLast=now;return !wheelSpent;}
