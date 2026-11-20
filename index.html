@@ -729,7 +729,7 @@ function setupNews(panel){
  // Reserve each entry's space; reveal only entries reached by the viewport.
  const revealed=new Set(),revealRows=new Set();let revealTimer=0,revealFrame=0,revealActive=false,nextRevealAt=0;
  function finishRow(node){
-  const animation=node._lifeReveal;if(animation){animation.cancel();delete node._lifeReveal;}
+  for(const key of ['_lifeReveal','_lifeRevealMotion']){const animation=node[key];if(animation){animation.cancel();delete node[key];}}
   node.style.removeProperty('opacity');node.style.removeProperty('visibility');revealed.add(node);
  }
  function collectRows(){for(const node of panel.querySelectorAll(contentSelector)){if(revealRows.has(node))continue;revealRows.add(node);if(revealActive&&!reduce.matches&&!window.nozeEditorActive){node.style.opacity='0';node.style.visibility='hidden';}else if(revealActive)finishRow(node);}}
@@ -747,9 +747,12 @@ function setupNews(panel){
   visible.sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top);
   const now=performance.now();if(now<nextRevealAt){revealTimer=setTimeout(queueReveal,nextRevealAt-now);return;}
   const node=visible[0];revealed.add(node);node.style.removeProperty('visibility');node.style.removeProperty('opacity');
-  const animation=node.animate([{opacity:0,clipPath:'inset(0 0 100% 0)',transform:'translateY(-10px)'},{opacity:1,clipPath:'inset(0)',transform:'translateY(0)'}],{duration:620,easing:'cubic-bezier(.22,.61,.36,1)',fill:'backwards'});
+  // Keep opacity linear so the next entry starts when this one is about 60% visible.
+  const duration=800,animation=node.animate([{opacity:0},{opacity:1}],{duration,easing:'linear',fill:'backwards'});
+  const motionAnimation=node.animate([{transform:'translateX(-36px)'},{transform:'translateX(0)'}],{duration,easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});
+  node._lifeRevealMotion=motionAnimation;motionAnimation.finished.then(()=>{if(node._lifeRevealMotion===motionAnimation)delete node._lifeRevealMotion;},()=>{});
   node._lifeReveal=animation;animation.finished.then(()=>{if(node._lifeReveal===animation)delete node._lifeReveal;},()=>{});
-  const gap=lifeKey==='news'?820:260;nextRevealAt=now+gap;if(visible.length>1)revealTimer=setTimeout(queueReveal,gap);
+  const gap=duration*.6;nextRevealAt=now+gap;if(visible.length>1)revealTimer=setTimeout(queueReveal,gap);
  }
  function queueReveal(){if(!disposed&&revealActive&&!revealFrame)revealFrame=requestAnimationFrame(revealViewport);}
  panel.cancelEntrance=cancelEntrance;
@@ -771,7 +774,7 @@ function setupNews(panel){
   const ambient=(reduce.matches||window.nozeEditorActive||moving||held)?0:Math.max(0,Math.min(1,(now-idleAt-600)/1200));
   // The rotating projection is independent of spring offsets and pauses during interaction.
   if(!reduce.matches&&!window.nozeEditorActive&&!moving&&!held)wavePhase=(wavePhase+elapsed/motion.wavePeriod*Math.PI*2*ambient)%(Math.PI*2);
-  const vr=view.getBoundingClientRect(),gallery=view.dataset.newsView==='gallery',axis=gallery?vr.width-1:6,dir=gallery?-1:1,rootY=0,rootX=axis,waveAt=y=>dir*motion.waveAmplitude*Math.sin(y/motion.wavePitch*Math.PI*2+wavePhase)*Math.max(0,Math.min(1,(y-rootY)/45));
+  const vr=view.getBoundingClientRect(),gallery=view.dataset.newsView==='gallery',axis=6,dir=1,rootY=0,rootX=axis,waveAt=y=>dir*motion.waveAmplitude*Math.sin(y/motion.wavePitch*Math.PI*2+wavePhase)*Math.max(0,Math.min(1,(y-rootY)/45));
   const nodes=[...view.querySelectorAll(contentSelector)],records=nodes.map((node,i)=>{const s=stateFor(node),r=node.getBoundingClientRect();return{node,s,y:r.top-vr.top-s.ry+(gallery?12:35),phase:i*.51};});
   const field=y=>{let x=0,dy=0;for(const r of records){const weight=Math.exp(-Math.abs(r.y-y)/190);x+=r.s.x*weight;dy+=r.s.y*weight;}return{x:x*motion.supportTransfer,y:dy*motion.supportTransfer};};
   for(const r of records){const wave=(now-idleAt)/8000*Math.PI*2+r.phase;r.x=r.s.x+ambient*3*motion.ambientScale*Math.sin(wave);r.dy=r.s.y+ambient*1.8*motion.ambientScale*Math.sin(wave*.91);r.elasticX=r.s.x;r.elasticY=r.s.y;r.s.wx=0;}
@@ -949,6 +952,8 @@ document.querySelector('#contact-dialog .dialog-close').onclick=()=>document.que
  function protectionError(item){if(!item?._protected)return '';if(item._protectionError)return String(item._protectionError);const id=String(item._id||''),html=item._customTemplate;if(!/^[A-Za-z0-9_-]{1,80}$/.test(id))return 'A protected item ID is missing or invalid.';if(typeof html!=='string'||!/^\s*<article\b/i.test(html))return 'A protected item template is missing or invalid.';const idAttr=html.match(/\bdata-noze-entry-id\s*=\s*(["'])(.*?)\1/i),mark=html.match(/\bdata-noze-preserve\s*=\s*(["'])true\1/i);if(!idAttr||idAttr[2]!==id||!mark)return 'The protected item ID or marker does not match its template.';if(/data:image\//i.test(html))return 'A protected image is not linked to an image token.';const images=Array.isArray(item.images)?item.images:[],seen=new Set();for(const match of html.matchAll(/__NOZE_IMAGE_(\d+)__/g)){const index=Number(match[1]);if(index<0||index>=images.length||typeof images[index]!=='string'||!images[index])return 'Protected image indexes do not match.';seen.add(index);}if(/__NOZE_IMAGE_/.test(html.replace(/__NOZE_IMAGE_\d+__/g,''))||images.some((_,i)=>!seen.has(i)))return 'Protected image indexes do not match.';return '';}
 
  const data=document.getElementById('noze-presets-data');let entries;try{entries=JSON.parse(data.textContent)}catch{return}
+ // Older combined pages stored Gallery under the News panel. Resolve by kind on split pages.
+ if(document.querySelector('.nav-item[data-panel=gallery]'))entries=entries.map(entry=>entry.kind==='gallery'?{...entry,selector:'[data-panel="gallery"] [data-news-view="gallery"]'}:entry);
  const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const lines=s=>e(s).replace(/\r\n|\r|\n/g,'<br>');
 function lifePhotos(x,kind){const sources=Array.isArray(x.images)?x.images:[],metadata=Array.isArray(x._images)?x._images:[];if(!sources.length)return '';const figure=(src,i)=>{let m=metadata[i]||{};if(m.src&&m.src!==src)m={};const attrs=m.attrs||{},extra=['title','data-source','data-credit','data-license','data-origin'].map(k=>attrs[k]?' '+k+'="'+e(attrs[k])+'"':'').join('');return '<figure class="life-photo-item" data-photo-index="'+i+'"><img class="life-photo-image image-ready'+(kind==='news'?' news-scene':'')+'" src="'+e(src)+'" alt="'+e(m.alt)+'"'+extra+'>'+(m.caption?'<figcaption class="life-photo-caption"'+(m.hideCaption?' hidden':'')+'>'+e(m.caption)+'</figcaption>':'')+'</figure>';};const first=sources.slice(0,3).map(figure).join(''),all=sources.map(figure).join('');const more='<details class="life-photo-more"><summary><span class="life-photo-more-label">'+(sources.length>3?'사진 더 보기 ('+sources.length+')':'사진 펼쳐보기')+'</span><span class="life-photo-less-label">사진 접기</span></summary><div class="life-photo-full-grid">'+all+'</div></details>';return '<div class="life-photo-set" data-photo-count="'+sources.length+'"><div class="life-photo-grid'+(sources.length===1?' life-photo-grid--single':sources.length===2?' life-photo-grid--pair':'')+'">'+first+'</div>'+more+'</div>';}
 let protectedSlots=new Map();
@@ -1041,7 +1046,36 @@ if(!/^data:image\/(?:png|jpeg|gif|webp|avif|svg\+xml);/i.test(source))return;
  }}
  window.__nozeApplyLayoutToPanel=panel=>apply(panel);
  let queued=false;function schedule(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;apply();});}apply();new MutationObserver(schedule).observe(document.documentElement,{childList:true,subtree:true});
-})();</script><!-- NOZE-LAYOUT-END --></body>
+})();</script><!-- NOZE-LAYOUT-END --><style data-noze-life-v2 data-noze-gallery-v3>
+/* NOZE-LIFE-PHOTO-TOGGLE v2 */
+.life-photo-set[data-photo-toggle]{cursor:pointer}.life-photo-set[data-photo-toggle]:focus-visible{outline:2px solid #657550;outline-offset:5px}
+.life-photo-more,.life-photo-more[open]{margin-top:0}.life-photo-more>summary{display:none}
+:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"]):has(>.life-photo-set){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,43%);grid-template-rows:repeat(6,min-content);column-gap:28px}
+:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"]):has(>.life-photo-set)>:not(.life-photo-set){grid-column:1}
+:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"])>.life-photo-set{grid-column:2;grid-row:1/-1;margin:0;max-width:100%}
+@container(max-width:820px){:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"]):has(>.life-photo-set){display:block}:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"])>.life-photo-set{margin-top:18px}}
+
+:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry .life-photo-set .life-photo-item{grid-column:auto;grid-row:auto;max-width:none;align-self:start;justify-self:stretch}
+/* Tight natural-ratio News thumbnails; Gallery and expanded images stay unchanged. */
+:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"]) .life-photo-grid:not(.life-photo-grid--single){display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start}
+:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"]) .life-photo-grid:not(.life-photo-grid--single)>.life-photo-item{flex:0 1 auto;width:max-content;max-width:100%}
+:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"]) .life-photo-grid:not(.life-photo-grid--single) .life-photo-image{width:auto;max-width:100%;height:180px;max-height:180px;background:transparent}
+:is(.panel[data-panel="news"],.panel[data-panel="gallery"]) .news-entry:not([data-noze-preserve="true"]) .life-photo-set:has(>.life-photo-more[open])>.life-photo-grid{display:none}
+
+/* NOZE-GALLERY-NATURAL-LEFT v3: standard Gallery entries only. */
+.panel[data-panel="gallery"] :is(#news-gallery-view,[data-news-view="gallery"])>p{padding-left:31px;text-align:left}
+.panel[data-panel="gallery"] :is(#news-gallery-view,[data-news-view="gallery"]) .gallery-year:has(.gallery-album:not([data-noze-preserve="true"]))>h3{margin:0 0 12px 31px;text-align:left}
+.panel[data-panel="gallery"] :is(#news-gallery-view,[data-news-view="gallery"]) .gallery-album:not([data-noze-preserve="true"]){align-self:flex-start;width:calc(100% - 31px);max-width:none;margin-left:31px;text-align:left}
+.panel[data-panel="gallery"] :is(#news-gallery-view,[data-news-view="gallery"]) .gallery-album:not([data-noze-preserve="true"]) :is(.gallery-caption,.gallery-handwritten){text-align:left}
+.panel[data-panel="gallery"] .gallery-album:not([data-noze-preserve="true"]) .life-photo-grid{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:flex-start;gap:12px}
+.panel[data-panel="gallery"] .gallery-album:not([data-noze-preserve="true"]) .life-photo-grid>.life-photo-item{flex:0 1 auto;width:max-content;max-width:100%;align-self:flex-start;background:transparent}
+.panel[data-panel="gallery"] .gallery-album:not([data-noze-preserve="true"]) .life-photo-grid .life-photo-image{display:block;width:auto;height:auto;max-width:100%;max-height:180px;aspect-ratio:auto;object-fit:contain;object-position:left top;background:transparent}
+.panel[data-panel="gallery"] .gallery-album:not([data-noze-preserve="true"]) .life-photo-grid--single .life-photo-image{height:auto;max-height:320px}
+.panel[data-panel="gallery"] .gallery-album:not([data-noze-preserve="true"]) .life-photo-set:has(>.life-photo-more[open])>.life-photo-grid{display:none}
+.panel[data-panel="gallery"] .gallery-album:not([data-noze-preserve="true"]) .life-photo-full-grid{justify-items:start;text-align:left}
+.panel[data-panel="gallery"] .gallery-album:not([data-noze-preserve="true"]) .life-photo-full-grid>.life-photo-item{width:fit-content;max-width:100%;background:transparent}
+.panel[data-panel="gallery"] .gallery-album:not([data-noze-preserve="true"]) .life-photo-full-grid .life-photo-image{width:auto;height:auto;max-width:100%;max-height:760px;aspect-ratio:auto;object-fit:contain;object-position:left top;background:transparent}
+</style></body>
 </html>
 
 
