@@ -1,0 +1,20 @@
+{
+  "format": "lab-site-publisher.photos.v1",
+  "repository": "knufoge-lab/knufoge_lab",
+  "branch": "main",
+  "folder": "",
+  "photos": [
+    {
+      "path": "media/8cd42194b92605f9709fa95de3fa149a480573f01ca5fcc32c951250ca345352.jpg",
+      "blob": "956eea9faf321e2c06b90ab79c9ed033cf5def19"
+    },
+    {
+      "path": "media/d75ec9291854274b55df5874b31ebd43c231a017f91e5e1c3e85e5a57e49eb28.jpg",
+      "blob": "bae8cae020179496607df1c956ab4025700dd9ae"
+    },
+    {
+      "path": "media/f9eab0d6f808ddabcf9aa90d4efbdd328d764ff41bc9d398fc69e2aeda9e1c14.jpg",
+      "blob": "1baf74d32e76054a91f386e3ea30e06ec427c1a3"
+    }
+  ]
+}
